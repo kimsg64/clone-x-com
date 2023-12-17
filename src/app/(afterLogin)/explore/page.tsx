@@ -1,3 +1,3 @@
 export default function Page() {
-    return <div></div>;
+    return <div>검색페이지</div>;
 }

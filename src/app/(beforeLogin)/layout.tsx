@@ -1,4 +1,4 @@
-import styles from '@/app/page.module.css';
+import styles from './_component/main.module.css';
 
 type Props = { children: React.ReactNode; modal: React.ReactNode };
 
