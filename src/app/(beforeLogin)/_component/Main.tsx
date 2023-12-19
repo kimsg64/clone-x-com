@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import zLogo from '../../../../public/zlogo.png';
-import styles from './main.module.css';
+import Link from "next/link";
+import Image from "next/image";
+import zLogo from "../../../../public/zlogo.png";
+import styles from "./main.module.css";
 
-export default function Modal() {
+export default function Main() {
     return (
         <>
             <div className={styles.left}>

@@ -1,14 +1,14 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+"use client";
+import { useRouter } from "next/navigation";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
 
-import style from './signup.module.css';
+import style from "./signup.module.css";
 
 export default function SignupModal() {
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [image, setImage] = useState('');
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [nickname, setNickname] = useState("");
+    const [image, setImage] = useState("");
     const [imageFile, setImageFile] = useState<File>();
 
     const router = useRouter();
@@ -33,20 +33,20 @@ export default function SignupModal() {
 
     const onSubmit: FormEventHandler = (e) => {
         e.preventDefault();
-        fetch('http://localhost:9090/api/users', {
-            method: 'post',
+        fetch("http://localhost:9090/api/users", {
+            method: "post",
             body: JSON.stringify({
                 id,
                 nickname,
                 image,
                 password,
             }),
-            credentials: 'include',
+            credentials: "include",
         })
             .then((response: Response) => {
                 console.log(response.status);
                 if (response.status === 200) {
-                    router.replace('/home');
+                    router.replace("/home");
                 }
             })
             .catch((err) => {
@@ -60,12 +60,7 @@ export default function SignupModal() {
                 <div className={style.modal}>
                     <div className={style.modalHeader}>
                         <button className={style.closeButton} onClick={onClickClose}>
-                            <svg
-                                width={24}
-                                viewBox="0 0 24 24"
-                                aria-hidden="true"
-                                className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"
-                            >
+                            <svg width={24} viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03">
                                 <g>
                                     <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
                                 </g>
@@ -79,52 +74,25 @@ export default function SignupModal() {
                                 <label className={style.inputLabel} htmlFor="id">
                                     아이디
                                 </label>
-                                <input
-                                    id="id"
-                                    className={style.input}
-                                    type="text"
-                                    placeholder=""
-                                    value={id}
-                                    onChange={onChangeId}
-                                />
+                                <input id="id" className={style.input} type="text" placeholder="" value={id} onChange={onChangeId} />
                             </div>
                             <div className={style.inputDiv}>
                                 <label className={style.inputLabel} htmlFor="name">
                                     닉네임
                                 </label>
-                                <input
-                                    id="name"
-                                    className={style.input}
-                                    type="text"
-                                    placeholder=""
-                                    value={nickname}
-                                    onChange={onChangeNickname}
-                                />
+                                <input id="name" className={style.input} type="text" placeholder="" value={nickname} onChange={onChangeNickname} />
                             </div>
                             <div className={style.inputDiv}>
                                 <label className={style.inputLabel} htmlFor="password">
                                     비밀번호
                                 </label>
-                                <input
-                                    id="password"
-                                    className={style.input}
-                                    type="password"
-                                    placeholder=""
-                                    value={password}
-                                    onChange={onChangePassword}
-                                />
+                                <input id="password" className={style.input} type="password" placeholder="" value={password} onChange={onChangePassword} />
                             </div>
                             <div className={style.inputDiv}>
                                 <label className={style.inputLabel} htmlFor="image">
                                     프로필
                                 </label>
-                                <input
-                                    id="image"
-                                    className={style.input}
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={onChangeImageFile}
-                                />
+                                <input id="image" className={style.input} type="file" accept="image/*" onChange={onChangeImageFile} />
                             </div>
                         </div>
                         <div className={style.modalFooter}>
