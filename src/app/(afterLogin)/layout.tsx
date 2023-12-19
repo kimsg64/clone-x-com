@@ -1,16 +1,18 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
-import NavMenu from "@/app/(afterLogin)/_component/NavMenu";
-import LogoutButton from "@/app/(afterLogin)/_component/LogoutButton";
-import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
-import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
+import NavMenu from '@/app/(afterLogin)/_component/NavMenu';
+import LogoutButton from '@/app/(afterLogin)/_component/LogoutButton';
+import TrendSection from '@/app/(afterLogin)/_component/TrendSection';
+import FollowRecommend from '@/app/(afterLogin)/_component/FollowRecommend';
 
-import styles from "./layout.module.css";
-import zLogo from "../../../public/zlogo.png";
+import styles from './layout.module.css';
+import zLogo from '../../../public/zlogo.png';
 
-export default function AfterLoginLayout({ children }: { children: React.ReactNode }) {
+type Props = { children: React.ReactNode; modal: React.ReactNode };
+
+export default function AfterLoginLayout({ children, modal }: Props) {
     return (
         <div className={styles.container}>
             <header className={styles.leftSectionWrapper}>
@@ -37,7 +39,7 @@ export default function AfterLoginLayout({ children }: { children: React.ReactNo
                 <div className={styles.rightSectionInner}>
                     <main className={styles.main}>{children}</main>
                     <section className={styles.rightSection}>
-                        <div style={{ marginBottom: 60, width: "inherit" }}>
+                        <div style={{ marginBottom: 60, width: 'inherit' }}>
                             <form className={styles.search}>
                                 <svg width={20} viewBox="0 0 24 24" aria-hidden="true">
                                     <g>
@@ -57,6 +59,7 @@ export default function AfterLoginLayout({ children }: { children: React.ReactNo
                     </section>
                 </div>
             </div>
+            {modal}
         </div>
     );
 }
