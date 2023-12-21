@@ -1,7 +1,14 @@
-import styles from "./trendSection.module.css";
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import Trend from "./Trend";
+import styles from "./trendSection.module.css";
 
 export default function TrendSection() {
+    const pathname = usePathname();
+    if (pathname === "/explore") return null;
+
     return (
         <div className={styles.trendBg}>
             <div className={styles.trend}>

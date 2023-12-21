@@ -1,27 +1,30 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import ActionButtons from './ActionButtons';
-import styles from './post.module.css';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/ko';
+import ActionButtons from "./ActionButtons";
+import PostArticle from "./PostArticle";
+import styles from "./post.module.css";
 
-dayjs.locale('ko');
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+
+dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 export default function Post() {
     const target = {
         User: {
-            id: 'elonmusk',
-            nickname: 'Elon Musk',
-            image: '/yRsRRjGO.jpg',
+            id: "elonmusk",
+            nickname: "Elon Musk",
+            image: "/yRsRRjGO.jpg",
         },
-        content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
+        content: "클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ",
         createdAt: new Date(),
         Images: [],
+        postId: 125,
     };
     return (
-        <article className={styles.post}>
+        <PostArticle post={target}>
             <div className={styles.postWrapper}>
                 <div className={styles.postUserSection}>
                     <Link href={`/${target.User.id}`} className={styles.postUserImage}>
@@ -44,6 +47,6 @@ export default function Post() {
                     <ActionButtons />
                 </div>
             </div>
-        </article>
+        </PostArticle>
     );
 }
