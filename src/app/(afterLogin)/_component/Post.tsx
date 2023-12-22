@@ -7,11 +7,14 @@ import styles from "./post.module.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import { faker } from "@faker-js/faker";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-export default function Post() {
+type Props = { noImage?: boolean };
+
+export default function Post({ noImage }: Props) {
     const target = {
         User: {
             id: "elonmusk",
@@ -20,9 +23,14 @@ export default function Post() {
         },
         content: "클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ",
         createdAt: new Date(),
-        Images: [],
+        Images: [] as any[],
         postId: 125,
     };
+
+    if (Math.random() > 0.5 && !noImage) {
+        target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+    }
+
     return (
         <PostArticle post={target}>
             <div className={styles.postWrapper}>
@@ -43,7 +51,13 @@ export default function Post() {
                         <span className={styles.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
                     </div>
                     <div>{target.content}</div>
-                    <div className={styles.postImageSection}></div>
+                    <div>
+                        {target.Images && target.Images.length > 0 && (
+                            <Link className={styles.postImageSection} href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}>
+                                <img src={target.Images[0]?.link} alt="" />
+                            </Link>
+                        )}
+                    </div>
                     <ActionButtons />
                 </div>
             </div>
