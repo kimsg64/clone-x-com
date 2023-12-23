@@ -1,15 +1,16 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import ActionButtons from "./ActionButtons";
-import PostArticle from "./PostArticle";
-import styles from "./post.module.css";
+import PostImages from './PostImages';
+import ActionButtons from './ActionButtons';
+import PostArticle from './PostArticle';
+import styles from './post.module.css';
 
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/ko";
-import { faker } from "@faker-js/faker";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+import { faker } from '@faker-js/faker';
 
-dayjs.locale("ko");
+dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
 type Props = { noImage?: boolean };
@@ -17,11 +18,11 @@ type Props = { noImage?: boolean };
 export default function Post({ noImage }: Props) {
     const target = {
         User: {
-            id: "elonmusk",
-            nickname: "Elon Musk",
-            image: "/yRsRRjGO.jpg",
+            id: 'elonmusk',
+            nickname: 'Elon Musk',
+            image: '/yRsRRjGO.jpg',
         },
-        content: "클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ",
+        content: '클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ',
         createdAt: new Date(),
         Images: [] as any[],
         postId: 125,
@@ -29,6 +30,9 @@ export default function Post({ noImage }: Props) {
 
     if (Math.random() > 0.5 && !noImage) {
         target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+        target.Images.push({ imageId: 2, link: faker.image.urlLoremFlickr() });
+        target.Images.push({ imageId: 3, link: faker.image.urlLoremFlickr() });
+        target.Images.push({ imageId: 4, link: faker.image.urlLoremFlickr() });
     }
 
     return (
@@ -52,11 +56,7 @@ export default function Post({ noImage }: Props) {
                     </div>
                     <div>{target.content}</div>
                     <div>
-                        {target.Images && target.Images.length > 0 && (
-                            <Link className={styles.postImageSection} href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}>
-                                <img src={target.Images[0]?.link} alt="" />
-                            </Link>
-                        )}
+                        <PostImages post={target} />
                     </div>
                     <ActionButtons />
                 </div>
