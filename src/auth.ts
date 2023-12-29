@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NextResponse } from "next/server";
 
 export const {
     handlers: { GET, POST }, // API route
@@ -10,6 +11,7 @@ export const {
         signIn: "/i/flow/login",
         newUser: "/i/flow/signup",
     },
+
     providers: [
         CredentialsProvider({
             async authorize(credentials) {
@@ -29,9 +31,10 @@ export const {
                 }
 
                 const user = await authResponse.json();
+                console.log("user", user);
 
                 return {
-                    id: user.id,
+                    email: user.id,
                     name: user.nickname,
                     image: user.image,
                     ...user,

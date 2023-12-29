@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import styles from "./logoutButton.module.css";
 
@@ -21,11 +21,11 @@ export default function LogoutButton() {
     return (
         <button className={styles.logOutButton} onClick={onLogout}>
             <div className={styles.logOutUserImage}>
-                <img src={me.user?.image!} alt={me.user?.id} />
+                <img src={me.user?.image!} alt={me.user?.email as string} />
             </div>
             <div className={styles.logOutUserName}>
                 <div>{me.user?.name}</div>
-                <div>@{me.user?.id}</div>
+                <div>@{me.user?.email}</div>
             </div>
         </button>
     );

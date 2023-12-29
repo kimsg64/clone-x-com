@@ -1,5 +1,13 @@
 import Main from "@/app/(beforeLogin)/_component/Main";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function BeforLoginPage() {
+export default async function BeforLoginPage() {
+    const session = await auth();
+
+    if (session?.user) {
+        redirect("/home");
+    }
+
     return <Main />;
 }
