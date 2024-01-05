@@ -21,8 +21,6 @@ export function RQProvider({ children }: Props) {
             },
         })
     );
-    console.log("client: ", client);
-
     return (
         <QueryClientProvider client={client}>
             {children}
