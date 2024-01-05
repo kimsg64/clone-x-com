@@ -11,7 +11,6 @@ export default function LoginModal() {
     const [message, setMessage] = useState("");
     const router = useRouter();
 
-    const onClickClose = () => router.back();
     const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         setMessage("");
@@ -27,6 +26,8 @@ export default function LoginModal() {
             setMessage("아이디와 비밀번호가 일치하지 않습니다.");
         }
     };
+
+    const onClickClose = () => router.back();
     const onChangeId: ChangeEventHandler<HTMLInputElement> = (e) => setId(e.target.value);
     const onChangePassword: ChangeEventHandler<HTMLInputElement> = (e) => setPassword(e.target.value);
 

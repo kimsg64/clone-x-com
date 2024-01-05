@@ -1,6 +1,8 @@
-import styles from './_component/main.module.css';
+import { ReactNode } from "react";
 
-type Props = { children: React.ReactNode; modal: React.ReactNode };
+import styles from "./_component/main.module.css";
+
+type Props = { children: ReactNode; modal: ReactNode };
 
 export default function BeforLoginLayout({ children, modal }: Props) {
     return (

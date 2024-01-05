@@ -7,6 +7,7 @@ export default async function BeforLoginPage() {
 
     if (session?.user) {
         redirect("/home");
+        return null;
     }
 
     return <Main />;
