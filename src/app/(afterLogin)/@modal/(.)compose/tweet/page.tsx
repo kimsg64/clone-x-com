@@ -1,30 +1,25 @@
-'use client';
-import { useRef, useState } from 'react';
-import styles from './modal.module.css';
+"use client";
+import { useRef, useState } from "react";
+import styles from "./modal.module.css";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function TweetModal() {
     const [content, setContent] = useState();
     const imageRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
+
     const onSubmit = () => {};
-    const onClickClose = () => {};
+    const onClickClose = () => router.back();
     const onClickButton = () => {};
     const onChangeContent = () => {};
-
-    const me = {
-        id: 'zerohch0',
-        image: '/5Udwvqim.jpg',
-    };
+    const { data: me } = useSession();
 
     return (
         <div className={styles.modalBackground}>
             <div className={styles.modal}>
                 <button className={styles.closeButton} onClick={onClickClose}>
-                    <svg
-                        width={24}
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                        className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"
-                    >
+                    <svg width={24} viewBox="0 0 24 24" aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03">
                         <g>
                             <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
                         </g>
@@ -34,16 +29,11 @@ export default function TweetModal() {
                     <div className={styles.modalBody}>
                         <div className={styles.postUserSection}>
                             <div className={styles.postUserImage}>
-                                <img src={me.image} alt={me.id} />
+                                <img src={me?.user?.image as string} alt={me?.user?.email as string} />
                             </div>
                         </div>
                         <div className={styles.inputDiv}>
-                            <textarea
-                                className={styles.input}
-                                placeholder="무슨 일이 일어나고 있나요?"
-                                value={content}
-                                onChange={onChangeContent}
-                            />
+                            <textarea className={styles.input} placeholder="무슨 일이 일어나고 있나요?" value={content} onChange={onChangeContent} />
                         </div>
                     </div>
                     <div className={styles.modalFooter}>

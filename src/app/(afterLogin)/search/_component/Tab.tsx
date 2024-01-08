@@ -6,17 +6,23 @@ import { useRouter, useSearchParams } from "next/navigation";
 import styles from "../search.module.css";
 
 export default function Tab() {
-    const [current, setCurrent] = useState("");
+    const [current, setCurrent] = useState("hot");
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const onClickHot = () => {
         setCurrent("hot");
-        router.replace(`/search?q=${searchParams.get("q")}`);
+
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete("f");
+        router.replace(`/search?${newSearchParams.toString()}`);
     };
     const onClickNew = () => {
         setCurrent("new");
-        router.replace(`/search?${searchParams.toString()}&f=live`);
+
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete("f", "live");
+        router.replace(`/search?${newSearchParams.toString()}`);
     };
     return (
         <div className={styles.homeFixed}>
