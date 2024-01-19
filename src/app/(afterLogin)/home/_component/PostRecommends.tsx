@@ -6,14 +6,14 @@ import Post from "@/app/(afterLogin)/_component/Post";
 import { Post as IPost } from "@/model/Post";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import styles from "../home.module.css";
 
 export default function PostRecommends() {
     const { data, fetchNextPage, hasNextPage, isFetching, isPending, isError } = useSuspenseInfiniteQuery<IPost[], Object, InfiniteData<IPost[]>, [_1: string, _2: string], number>({
         queryKey: ["posts", "recommends"],
         queryFn: getPostRecommends,
         initialPageParam: 0,
-        getNextPageParam: (lastPage) => lastPage.at(-1)!.postId + 5,
+        // getNextPageParam: (lastPage) => lastPage.at(-1)!.postId + 5,
+        getNextPageParam: (lastPage) => lastPage.at(-1)?.postId,
         staleTime: 60 * 1000,
         gcTime: 300 * 1000,
     });
@@ -35,7 +35,7 @@ export default function PostRecommends() {
             {data?.pages.map((page, i) => (
                 <Fragment key={i}>
                     {page.map((post) => (
-                        <Post key={post.postId} post={post} />
+                        <Post key={post?.postId} post={post} />
                     ))}
                 </Fragment>
             ))}

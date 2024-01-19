@@ -5,13 +5,15 @@ import Tab from "@/app/(afterLogin)/home/_component/Tab";
 import PostForm from "@/app/(afterLogin)/home/_component/PostForm";
 import TabDecider from "./_component/TabDecider";
 import Loading from "./loading";
+import { auth } from "@/auth";
 
 export default async function HomePage() {
+    const session = await auth();
     return (
         <main className={styles.main}>
             <TabProvider>
                 <Tab />
-                <PostForm />
+                <PostForm me={session} />
                 <Suspense fallback={<Loading />}>
                     <TabDecider />
                 </Suspense>

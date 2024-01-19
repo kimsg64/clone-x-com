@@ -3,8 +3,7 @@
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 
-export default async (prevState: { message: string | null } | undefined, formData: FormData) => {
-    console.log("form data: ", formData);
+export default async (prevState: any, formData: FormData) => {
     if (!formData.get("id") || !(formData.get("id") as string).trim()) {
         return { message: "no_id" };
     }
@@ -18,6 +17,7 @@ export default async (prevState: { message: string | null } | undefined, formDat
         return { message: "no_image" };
     }
 
+    formData.set("nickname", formData.get("name") as string);
     let shouldRedirect = false;
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
@@ -25,29 +25,29 @@ export default async (prevState: { message: string | null } | undefined, formDat
             body: formData,
             credentials: "include",
         });
-        console.log("returned???", console.log(response.status));
+        console.log("status???", response.status);
 
         if (response.status === 403) {
             return { message: "user_exists" };
         }
 
-        console.log(console.log(await response.json()));
+        console.log(await response.json());
         shouldRedirect = true;
 
-        try {
-            await signIn("credentials", {
-                username: formData.get("id"),
-                password: formData.get("password"),
-            });
-        } catch (error) {
-            console.error(error);
-        }
+        const result = await signIn("credentials", {
+            username: formData.get("id"),
+            password: formData.get("password"),
+            redirect: false,
+        });
+        console.log("what are you doing?", result);
     } catch (error) {
         console.log(error);
-        return { message: "" };
+        return;
+        // return { message: null };
     }
 
     if (shouldRedirect) {
         redirect("/home");
     }
+    // return { message: null };
 };

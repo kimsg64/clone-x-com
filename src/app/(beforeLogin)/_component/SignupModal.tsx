@@ -3,15 +3,31 @@
 import { useFormState, useFormStatus } from "react-dom";
 import styles from "./signup.module.css";
 import BackButton from "./BackButton";
-import submit from "@/app/(beforeLogin)/_lib/signup";
+import onSubmit from "@/app/(beforeLogin)/_lib/signup";
 
-function showMessage(msg: string | undefined) {
-    if (!msg) return "";
-    return `${msg.split("_")[1]}을/를 입력하세요.`;
+function showMessage(messasge: string) {
+    // if (!msg) return "";
+    // return `${msg.split("_")[1]}을/를 입력하세요.`;
+    if (messasge === "no_id") {
+        return "아이디를 입력하세요.";
+    }
+    if (messasge === "no_name") {
+        return "닉네임을 입력하세요.";
+    }
+    if (messasge === "no_password") {
+        return "비밀번호를 입력하세요.";
+    }
+    if (messasge === "no_image") {
+        return "이미지를 업로드하세요.";
+    }
+    if (messasge === "user_exists") {
+        return "이미 사용 중인 아이디입니다.";
+    }
+    return "";
 }
 
 export default function SignupModal() {
-    const [state, formAction] = useFormState(submit, { message: "" });
+    const [state, formAction] = useFormState(onSubmit, { message: "" });
     const { pending } = useFormStatus();
 
     return (
@@ -53,7 +69,7 @@ export default function SignupModal() {
                             <button type="submit" className={styles.actionButton} disabled={pending}>
                                 가입하기
                             </button>
-                            <div className={styles.error}>{showMessage(state?.message)}</div>
+                            <div className={styles.error}>{showMessage(state?.message!)}</div>
                         </div>
                     </form>
                 </div>
