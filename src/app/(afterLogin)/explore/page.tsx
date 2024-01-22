@@ -1,7 +1,12 @@
-"use client";
-import SearchForm from "@/app/(afterLogin)/_component/SearchForm";
-import styles from "./explore.module.css";
-import TrendSection from "./_component/TrendSection";
+import SearchForm from '@/app/(afterLogin)/_component/SearchForm';
+import styles from './explore.module.css';
+import TrendSection from './_component/TrendSection';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: '탐색하기 / Z',
+    description: '탐색해 보세요.',
+};
 
 export default function Page() {
     return (

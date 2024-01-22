@@ -1,32 +1,25 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
-import styles from "./post.module.css";
-import { Post } from "@/model/Post";
+import styles from './post.module.css';
+import { Post } from '@/model/Post';
 
 type Props = {
     children: ReactNode;
-    // post: {
-    //     User: {
-    //         id: string;
-    //         nickname: string;
-    //         image: string;
-    //     };
-    //     content: string;
-    //     createdAt: Date;
-    //     postId: number;
-    //     Images: string[];
-    // };
     post: Post;
 };
 
 export default function PostArticle({ children, post }: Props) {
     const router = useRouter();
-    const onClick = () => router.push(`/${post.User.id}/status/${post.postId}`);
+    let target = post;
+    if (post.Original) {
+        target = post.Original;
+    }
+    const onClick = () => router.push(`/${target.User.id}/status/${target.postId}`);
     return (
-        <article className={styles.post} onClickCapture={onClick}>
+        <article className={styles.post} onClick={onClick}>
             {children}
         </article>
     );
