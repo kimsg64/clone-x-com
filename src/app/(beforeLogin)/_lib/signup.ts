@@ -1,53 +1,52 @@
-"use server";
+'use server';
 
-import { redirect } from "next/navigation";
-import { signIn } from "@/auth";
+import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
 
 export default async (prevState: any, formData: FormData) => {
-    if (!formData.get("id") || !(formData.get("id") as string).trim()) {
-        return { message: "no_id" };
+    if (!formData.get('id') || !(formData.get('id') as string).trim()) {
+        return { message: 'no_id' };
     }
-    if (!formData.get("name") || !(formData.get("name") as string).trim()) {
-        return { message: "no_name" };
+    if (!formData.get('name') || !(formData.get('name') as string).trim()) {
+        return { message: 'no_name' };
     }
-    if (!formData.get("password") || !(formData.get("password") as string).trim()) {
-        return { message: "no_password" };
+    if (!formData.get('password') || !(formData.get('password') as string).trim()) {
+        return { message: 'no_password' };
     }
-    if (!formData.get("image")) {
-        return { message: "no_image" };
+    if (!formData.get('image')) {
+        return { message: 'no_image' };
     }
 
-    formData.set("nickname", formData.get("name") as string);
+    formData.set('nickname', formData.get('name') as string);
     let shouldRedirect = false;
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`, {
-            method: "post",
+            method: 'post',
             body: formData,
-            credentials: "include",
+            credentials: 'include',
         });
-        console.log("status???", response.status);
+        console.log('status???', response.status);
 
         if (response.status === 403) {
-            return { message: "user_exists" };
+            return { message: 'user_exists' };
         }
 
         console.log(await response.json());
         shouldRedirect = true;
 
-        const result = await signIn("credentials", {
-            username: formData.get("id"),
-            password: formData.get("password"),
+        const result = await signIn('credentials', {
+            username: formData.get('id'),
+            password: formData.get('password'),
             redirect: false,
         });
-        console.log("what are you doing?", result);
+        console.log('what are you doing?', result);
     } catch (error) {
         console.log(error);
-        return;
-        // return { message: null };
+        return { message: null };
     }
 
     if (shouldRedirect) {
-        redirect("/home");
+        redirect('/home');
     }
-    // return { message: null };
+    return { message: null };
 };
