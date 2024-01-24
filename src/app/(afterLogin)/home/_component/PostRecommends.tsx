@@ -13,7 +13,7 @@ export default function PostRecommends() {
         queryFn: getPostRecommends,
         initialPageParam: 0,
         // getNextPageParam: (lastPage) => lastPage.at(-1)!.postId + 5,
-        getNextPageParam: (lastPage) => lastPage.at(-1)?.postId,
+        getNextPageParam: (lastPage) => lastPage?.at(-1)?.postId,
         staleTime: 60 * 1000,
         gcTime: 300 * 1000,
     });
