@@ -1,8 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 
-import zLogo from "../../../../public/zlogo.png";
-import styles from "./main.module.css";
+import zLogo from '../../../../public/zlogo.png';
+// import styles from "./main.module.css";
+import * as styles from './main.css';
 
 export default function Main() {
     return (

@@ -1,33 +1,30 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import styles from '../messages.module.css';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
-import { faker } from '@faker-js/faker';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
-export default function Room() {
+import { Room } from '@/model/Room';
+
+type Props = { room: Room };
+
+export default function Room({ room }: Props) {
     const router = useRouter();
+    const { data: session } = useSession();
+    const user = room.Receiver.id === session?.user?.email ? room.Sender : room.Receiver;
 
-    const user = {
-        id: 'hero',
-        nickname: '영웅',
-        Messages: [
-            { roomId: 123, content: 'hi', createdAt: new Date() },
-            { roomId: 123, content: 'bye', createdAt: new Date() },
-        ],
-    };
-
-    const onClick = () => router.push(`/messages/${user.Messages.at(-1)?.roomId}`);
+    const onClick = () => router.push(`/messages/${room.room}`);
 
     return (
         <div className={styles.room} onClickCapture={onClick}>
             <div className={styles.roomUserImage}>
-                <img src={faker.image.avatar()} alt="" />
+                <img src={user.image} alt="" />
             </div>
             <div className={styles.roomChatInfo}>
                 <div className={styles.roomUserInfo}>
@@ -35,9 +32,9 @@ export default function Room() {
                     &nbsp;
                     <span>@{user.id}</span>
                     &nbsp; · &nbsp;
-                    <span className={styles.postDate}>{dayjs(user.Messages?.at(-1)?.createdAt).fromNow(true)}</span>
+                    <span className={styles.postDate}>{dayjs(room.createdAt).fromNow(true)}</span>
                 </div>
-                <div className={styles.roomLastChat}>{user.Messages?.at(-1)?.content}</div>
+                <div className={styles.roomLastChat}>{room.content}</div>
             </div>
         </div>
     );
